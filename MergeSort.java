@@ -1,96 +1,78 @@
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
 public class MergeSort {
-  public static void main(String[] args) {
-
-    Random rand = new Random(); // Create a Random object to generate random numbers
-    int[] numbers = new int[10]; // Initialize an array of size 10
-
-    // Populate the array with random integers between 0 and 100
-    for (int i = 0; i < numbers.length; i++) {
-      numbers[i] = rand.nextInt(100);
+    public static void main(String[] args) {
+        int[] numbers = new int[10];
+        
+        // Read numbers from RandomNum.txt
+        try (Scanner scanner = new Scanner(new File("RandomNum.txt"))) {
+            for (int i = 0; i < numbers.length && scanner.hasNextInt(); i++) {
+                numbers[i] = scanner.nextInt();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: RandomNum.txt not found.");
+            return;
+        }
+        
+        System.out.println("Before Sorting:");
+        printArray(numbers);
+        
+        mergeSort(numbers);
+        
+        System.out.println("\nAfter Sorting:");
+        printArray(numbers);
+        
+        // Write sorted numbers to SortedNum.txt
+        try (PrintWriter writer = new PrintWriter(new File("SortedNum.txt"))) {
+            for (int num : numbers) {
+                writer.println(num);
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to SortedNum.txt");
+        }
     }
 
-    System.out.println("Before:");
-    printArray(numbers); // Print the unsorted array
+    private static void mergeSort(int[] inputArray) {
+        int inputLength = inputArray.length;
+        if (inputLength < 2) {
+            return;
+        }
 
-    mergeSort(numbers); // Call mergeSort to sort the array
+        int midIndex = inputLength / 2;
+        int[] leftHalf = Arrays.copyOfRange(inputArray, 0, midIndex);
+        int[] rightHalf = Arrays.copyOfRange(inputArray, midIndex, inputLength);
 
-    System.out.println("\nAfter:");
-    printArray(numbers); // Print the sorted array
-  }
+        mergeSort(leftHalf);
+        mergeSort(rightHalf);
 
-  // Recursive function to perform merge sort
-  private static void mergeSort(int[] inputArray) {
-    int inputLength = inputArray.length;
-    
-    // Base case: if the array has less than 2 elements, it's already sorted
-    if (inputLength < 2) {
-      return;
+        merge(inputArray, leftHalf, rightHalf);
     }
-    
-    int midIndex = inputLength / 2; // Find the middle index of the array
-    
-    // Create two subarrays: leftHalf and rightHalf
-    int[] leftHalf = new int[midIndex];
-    int[] rightHalf = new int[inputLength - midIndex];
-    
-    // Copy elements into leftHalf
-    for (int i = 0; i < midIndex; i++) {
-      leftHalf[i] = inputArray[i];
-    }
-    
-    // Copy elements into rightHalf
-    for (int i = midIndex; i < inputLength; i++) {
-      rightHalf[i - midIndex] = inputArray[i];
-    }
-    
-    // Recursively sort both halves
-    mergeSort(leftHalf);
-    mergeSort(rightHalf);
-    
-    // Merge the sorted halves back into the original array
-    merge(inputArray, leftHalf, rightHalf);
-  }
 
-  // Function to merge two sorted subarrays into a single sorted array
-  private static void merge(int[] inputArray, int[] leftHalf, int[] rightHalf) {
-    int leftSize = leftHalf.length;
-    int rightSize = rightHalf.length;
-    
-    int i = 0, j = 0, k = 0; // Pointers for leftHalf, rightHalf, and inputArray
-    
-    // Merge elements from leftHalf and rightHalf in sorted order
-    while (i < leftSize && j < rightSize) {
-      if (leftHalf[i] <= rightHalf[j]) {
-        inputArray[k] = leftHalf[i];
-        i++;
-      } else {
-        inputArray[k] = rightHalf[j];
-        j++;
-      }
-      k++;
-    }
-    
-    // Copy any remaining elements from leftHalf (if any)
-    while (i < leftSize) {
-      inputArray[k] = leftHalf[i];
-      i++;
-      k++;
-    }
-    
-    // Copy any remaining elements from rightHalf (if any)
-    while (j < rightSize) {
-      inputArray[k] = rightHalf[j];
-      j++;
-      k++;
-    }
-  }
+    private static void merge(int[] inputArray, int[] leftHalf, int[] rightHalf) {
+        int leftSize = leftHalf.length;
+        int rightSize = rightHalf.length;
+        int i = 0, j = 0, k = 0;
 
-  // Function to print the elements of an array
-  private static void printArray(int[] numbers) {
-    for (int i = 0; i < numbers.length; i++) {
-      System.out.println(numbers[i]);
+        while (i < leftSize && j < rightSize) {
+            if (leftHalf[i] <= rightHalf[j]) {
+                inputArray[k++] = leftHalf[i++];
+            } else {
+                inputArray[k++] = rightHalf[j++];
+            }
+        }
+
+        while (i < leftSize) {
+            inputArray[k++] = leftHalf[i++];
+        }
+        while (j < rightSize) {
+            inputArray[k++] = rightHalf[j++];
+        }
     }
-  }
+
+    private static void printArray(int[] numbers) {
+        for (int num : numbers) {
+            System.out.println(num);
+        }
+    }
 }
