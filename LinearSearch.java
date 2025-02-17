@@ -20,7 +20,6 @@ public class LinearSearch {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] numbers = line.trim().split("\\s+");
-                
                 for (String numStr : numbers) {
                     try {
                         list.add(Integer.parseInt(numStr));
@@ -51,12 +50,20 @@ public class LinearSearch {
         System.out.println();
 
         int searchValue = 8;
+
+        long startTime = System.nanoTime();
         int index = linearSearch(array, searchValue);
+        long endTime = System.nanoTime();
+
+        long elapsedTime = endTime - startTime;
+        double elapsedTimeMs = elapsedTime / 1_000_000.0;
 
         if (index != -1) {
             System.out.println("Element " + searchValue + " found at index " + index);
         } else {
             System.out.println("Element " + searchValue + " not found.");
         }
+
+        System.out.println("Linear search execution time: " + elapsedTimeMs + " ms");
     }
 }
