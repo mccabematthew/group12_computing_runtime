@@ -1,37 +1,48 @@
-package bubblesort;
+import java.io.*;
+import java.util.*;
 
-import java.util.Arrays;
-
-public class BubbleSort {
+public class SortNumbers {
     public static void main(String[] args) {
-        int[] numbers = {4, 7, 24, 19, 1, 33};//creates an array of type int
+        List<Integer> numbers = new ArrayList<>();
+        List<Integer> numbers2 = new ArrayList<>();
         
-        System.out.print("Array before being sorted: ");
-        System.out.println(Arrays.toString(numbers)); // Displays the array before sorting
+        try (BufferedReader reader = new BufferedReader(new FileReader("randomNumb.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    numbers.add(Integer.parseInt(line.trim()));
+                } catch (NumberFormatException e) {
+                    System.out.println("Warning: Skipping invalid number - " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Unable to read the file.");
+            return;
+        }
         
-        bubbleSort(numbers); //calls the method
+        bubbleSort(numbers);
         
-        System.out.print("Array after being sorted: ");
-        System.out.println(Arrays.toString(numbers)); // Displays the array after being sorted
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNumb.txt"))) {
+            for (int num : numbers) {
+                writer.write(num + "\n");
+            }
+            System.out.println("Numbers sorted and written to sortedNumb.txt successfully.");
+        } catch (IOException e) {
+            System.out.println("Error: Unable to write to the file.");
+        }
+
     }
-
-    public static void bubbleSort(int[] numbers) {
-        int x = numbers.length;
-        //i loop is the numbers of passes through the array, ensuring the largest element moves to its correct spot after each pass
-        for (int i = 0; i < x - 1; i++) { 
-        	//j loop will swap the numbers if needed, will only swap the largest element to its correct spot
-            for (int j = 0; j < x - i - 1; j++) { 
-                if (numbers[j] > numbers[j + 1]) {
-                    // Swap numbers if true
-                    int temp = numbers[j];
-                    numbers[j] = numbers[j + 1];
-                    numbers[j + 1] = temp;
-
-                    // Print the swap process
-                    System.out.println("Swapping: " + numbers[j] + " with " + numbers[j + 1]);
+    
+    public static void bubbleSort(List<Integer> numbers) {
+        int n = numbers.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (numbers.get(j) > numbers.get(j + 1)) {
+                    int temp = numbers.get(j);
+                    numbers.set(j, numbers.get(j + 1));
+                    numbers.set(j + 1, temp);
                 }
             }
         }
     }
 }
-
