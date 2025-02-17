@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class SortNumbers {
+public class BubbleSort {
     public static void main(String[] args) {
         List<Integer> numbers = new ArrayList<>();
         
