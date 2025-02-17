@@ -1,92 +1,72 @@
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
 public class QuickSort {
+    public static void main(String[] args) {
+        List<Integer> numbers = new ArrayList<>();
 
-  public static void main(String[] args) {
-    Random rand = new Random(); // Create a Random object to generate random numbers
-    int[] numbers = new int[10]; // Initialize an array of size 10
+        // Read numbers from file
+        try (BufferedReader reader = new BufferedReader(new FileReader("randomNumb.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    numbers.add(Integer.parseInt(line.trim()));
+                } catch (NumberFormatException e) {
+                    System.out.println("Warning: Skipping invalid number - " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Unable to read the file.");
+            return;
+        }
 
-    // Populate the array with random integers between 0 and 99
-    for (int i = 0; i < numbers.length; i++) {
-      numbers[i] = rand.nextInt(100);
+        // Convert List to Array for Quick Sort
+        int[] numArray = numbers.stream().mapToInt(i -> i).toArray();
+
+        // Sort using Quick Sort
+        quicksort(numArray, 0, numArray.length - 1);
+
+        // Write sorted numbers to sortedNum.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNum.txt"))) {
+            for (int num : numArray) {
+                writer.write(num + "\n");
+            }
+            System.out.println("Numbers sorted and written to sortedNum.txt successfully.");
+        } catch (IOException e) {
+            System.out.println("Error: Unable to write to the file.");
+        }
     }
 
-    System.out.println("Before:");
-    printArray(numbers); // Print the unsorted array
-
-    quicksort(numbers); // Call quicksort to sort the array
-
-    System.out.println("\nAfter:");
-    printArray(numbers); // Print the sorted array
-  }
-
-  // Wrapper method to call quicksort with the full array
-  private static void quicksort(int[] array) {
-    quicksort(array, 0, array.length - 1);
-  }
-
-  // Recursive quicksort function
-  private static void quicksort(int[] array, int lowIndex, int highIndex) {
-    
-    if (lowIndex >= highIndex) { // Base case: if the section has one or no elements, return
-      return;
+    // Quick Sort Algorithm
+    private static void quicksort(int[] array, int low, int high) {
+        if (low < high) {
+            int partitionIndex = partition(array, low, high);
+            quicksort(array, low, partitionIndex - 1);
+            quicksort(array, partitionIndex + 1, high);
+        }
     }
 
-    // Choose a pivot randomly and move it to the end
-    int pivotIndex = new Random().nextInt(highIndex - lowIndex) + lowIndex;
-    int pivot = array[pivotIndex];
-    swap(array, pivotIndex, highIndex);
+    // Partition function for Quick Sort
+    private static int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
 
-    // Partition the array and get the pivot’s final position
-    int leftPointer = partition(array, lowIndex, highIndex, pivot);
+        for (int j = low; j < high; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                swap(array, i, j);
+            }
+        }
 
-    // Recursively sort the left and right subarrays
-    quicksort(array, lowIndex, leftPointer - 1);
-    quicksort(array, leftPointer + 1, highIndex);
-  }
-
-  // Partition function to rearrange elements around the pivot
-  private static int partition(int[] array, int lowIndex, int highIndex, int pivot) {
-    int leftPointer = lowIndex;
-    int rightPointer = highIndex - 1;
-
-    while (leftPointer < rightPointer) {
-      // Move left pointer until an element greater than the pivot is found
-      while (array[leftPointer] <= pivot && leftPointer < rightPointer) {
-        leftPointer++;
-      }
-
-      // Move right pointer until an element smaller than the pivot is found
-      while (array[rightPointer] >= pivot && leftPointer < rightPointer) {
-        rightPointer--;
-      }
-
-      // Swap out-of-place elements
-      swap(array, leftPointer, rightPointer);
+        swap(array, i + 1, high);
+        return i + 1;
     }
-    
-    // Final swap to place the pivot in its correct position
-    if(array[leftPointer] > array[highIndex]) {
-      swap(array, leftPointer, highIndex);
-    }
-    else {
-      leftPointer = highIndex;
-    }
-    
-    return leftPointer; // Return the final pivot position
-  }
 
-  // Function to swap two elements in an array
-  private static void swap(int[] array, int index1, int index2) {
-    int temp = array[index1];
-    array[index1] = array[index2];
-    array[index2] = temp;
-  }
-
-  // Function to print the elements of an array
-  private static void printArray(int[] numbers) {
-    for (int i = 0; i < numbers.length; i++) {
-      System.out.println(numbers[i]);
+    // Swap function
+    private static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
-  }
 }
+
