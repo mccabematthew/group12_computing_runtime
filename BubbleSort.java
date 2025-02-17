@@ -4,7 +4,6 @@ import java.util.*;
 public class SortNumbers {
     public static void main(String[] args) {
         List<Integer> numbers = new ArrayList<>();
-        List<Integer> numbers2 = new ArrayList<>();
         
         try (BufferedReader reader = new BufferedReader(new FileReader("randomNumb.txt"))) {
             String line;
