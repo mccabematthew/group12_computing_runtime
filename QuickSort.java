@@ -36,11 +36,11 @@ public class QuickSort {
         double runtimeInSeconds = (endTime - startTime) / 1_000_000_000.0;
 
         // Write sorted numbers to sortedNum.txt
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNum.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNumb.txt"))) {
             for (int num : numArray) {
                 writer.write(num + "\n");
             }
-            System.out.println("Numbers sorted and written to sortedNum.txt successfully.");
+            System.out.println("Numbers sorted and written to sortedNumb.txt successfully.");
         } catch (IOException e) {
             System.out.println("Error: Unable to write to the file.");
         }
