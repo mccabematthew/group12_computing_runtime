@@ -23,12 +23,12 @@ public class MergeSort {
         long endTime = System.nanoTime(); // End time
         
         long elapsedTime = endTime - startTime;
-        double elapsedTimeMs = elapsedTime / 1_000_000_000.0;
+        double elapsedTimeSecs = elapsedTime / 1_000_000_000.0;
         
         System.out.println("\nAfter Sorting:");
         printArray(numbers);
         
-        System.out.println("Merge sort execution time: " + elapsedTimeMs + " s");
+        System.out.println("Merge sort execution time: " + elapsedTimeSecs + " Secs");
         
         // Write sorted numbers to SortedNum.txt
         try (PrintWriter writer = new PrintWriter(new File("SortedNumb.txt"))) {
@@ -36,7 +36,7 @@ public class MergeSort {
                 writer.println(num);
             }
         } catch (IOException e) {
-            System.out.println("Error writing to SortedNum.txt");
+            System.out.println("Error writing to SortedNumb.txt");
         }
     }
 
