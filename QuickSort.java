@@ -33,7 +33,7 @@ public class QuickSort {
         long endTime = System.nanoTime();
 
         // Calculate runtime in seconds
-        double runtimeInSeconds = (endTime - startTime) / 1_000_000_000.0;
+        double runtimeInSecs = (endTime - startTime) / 1_000_000_000.0;
 
         // Write sorted numbers to sortedNum.txt
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNumb.txt"))) {
@@ -46,7 +46,7 @@ public class QuickSort {
         }
 
         // Print out the time taken in seconds
-        System.out.println("Time taken to sort the numbers: " + runtimeInSeconds + " seconds.");
+        System.out.println("Time taken to sort the numbers: " + runtimeInSecs + " secs.");
     }
 
     // Quick Sort Algorithm
