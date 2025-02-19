@@ -11,7 +11,7 @@ public class MergeSort {
                 numbers[i] = scanner.nextInt();
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Error: RandomNumb.txt not found.");
+            System.out.println("Error: RandNumb.txt not found.");
             return;
         }
         
