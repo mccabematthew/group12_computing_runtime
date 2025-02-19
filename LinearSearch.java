@@ -41,7 +41,7 @@ public class LinearSearch {
     }
 
     public static void main(String[] args) {
-        int[] array = readFileToArray("TemporaryTextFile.txt");
+        int[] array = readFileToArray("RandNumb.txt");
 
         System.out.println("Array contents:");
         for (int num : array) {
