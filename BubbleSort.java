@@ -5,7 +5,7 @@ public class BubbleSort {
     public static void main(String[] args) {
         List<Integer> numbers = new ArrayList<>();
         
-        try (BufferedReader reader = new BufferedReader(new FileReader("randomNumb.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("RandomNumb.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 try {
@@ -21,11 +21,11 @@ public class BubbleSort {
         
         bubbleSort(numbers);
         
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNumb.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("SortedNumb.txt"))) {
             for (int num : numbers) {
                 writer.write(num + "\n");
             }
-            System.out.println("Numbers sorted and written to sortedNumb.txt successfully.");
+            System.out.println("Numbers sorted and written to SortedNumb.txt successfully.");
         } catch (IOException e) {
             System.out.println("Error: Unable to write to the file.");
         }
