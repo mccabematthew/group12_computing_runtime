@@ -6,7 +6,7 @@ public class MergeSort {
         int[] numbers = new int[500];
         
         // Read numbers from RandomNum.txt
-        try (Scanner scanner = new Scanner(new File("RandomNumb.txt"))) {
+        try (Scanner scanner = new Scanner(new File("RandNumb.txt"))) {
             for (int i = 0; i < numbers.length && scanner.hasNextInt(); i++) {
                 numbers[i] = scanner.nextInt();
             }
