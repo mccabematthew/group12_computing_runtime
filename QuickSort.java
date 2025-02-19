@@ -23,8 +23,17 @@ public class QuickSort {
         // Convert List to Array for Quick Sort
         int[] numArray = numbers.stream().mapToInt(i -> i).toArray();
 
+        // Measure start time in nanoseconds
+        long startTime = System.nanoTime();
+
         // Sort using Quick Sort
         quicksort(numArray, 0, numArray.length - 1);
+
+        // Measure end time in nanoseconds
+        long endTime = System.nanoTime();
+
+        // Calculate runtime in seconds
+        double runtimeInSeconds = (endTime - startTime) / 1_000_000_000.0;
 
         // Write sorted numbers to sortedNum.txt
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sortedNum.txt"))) {
@@ -35,6 +44,9 @@ public class QuickSort {
         } catch (IOException e) {
             System.out.println("Error: Unable to write to the file.");
         }
+
+        // Print out the time taken in seconds
+        System.out.println("Time taken to sort the numbers: " + runtimeInSeconds + " seconds.");
     }
 
     // Quick Sort Algorithm
@@ -69,4 +81,3 @@ public class QuickSort {
         array[j] = temp;
     }
 }
-
