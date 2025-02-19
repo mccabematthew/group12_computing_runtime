@@ -3,28 +3,35 @@ import java.util.*;
 
 public class MergeSort {
     public static void main(String[] args) {
-        int[] numbers = new int[10];
+        int[] numbers = new int[500];
         
         // Read numbers from RandomNum.txt
-        try (Scanner scanner = new Scanner(new File("RandomNum.txt"))) {
+        try (Scanner scanner = new Scanner(new File("RandomNumb.txt"))) {
             for (int i = 0; i < numbers.length && scanner.hasNextInt(); i++) {
                 numbers[i] = scanner.nextInt();
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Error: RandomNum.txt not found.");
+            System.out.println("Error: RandomNumb.txt not found.");
             return;
         }
         
         System.out.println("Before Sorting:");
         printArray(numbers);
         
+        long startTime = System.nanoTime(); // Start time
         mergeSort(numbers);
+        long endTime = System.nanoTime(); // End time
+        
+        long elapsedTime = endTime - startTime;
+        double elapsedTimeMs = elapsedTime / 1_000_000_000.0;
         
         System.out.println("\nAfter Sorting:");
         printArray(numbers);
         
+        System.out.println("Merge sort execution time: " + elapsedTimeMs + " s");
+        
         // Write sorted numbers to SortedNum.txt
-        try (PrintWriter writer = new PrintWriter(new File("SortedNum.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new File("SortedNumb.txt"))) {
             for (int num : numbers) {
                 writer.println(num);
             }
