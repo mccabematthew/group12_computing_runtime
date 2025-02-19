@@ -15,7 +15,7 @@ public class RandomNumb {
 			randomArray[i] = random.nextInt(1000);
 		}
 		
-		try (FileWriter writer = new FileWriter("RandomNumb.txt")) {
+		try (FileWriter writer = new FileWriter("RandNumb.txt")) {
             System.out.print("Random array: [");
             for (int i = 0; i < array; i++) {
                 writer.write(randomArray[i] + "\n");
