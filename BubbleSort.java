@@ -19,7 +19,16 @@ public class BubbleSort {
             return;
         }
         
+        //START CPU run time
+        long startTime = System.nanoTime(); // Start time
         bubbleSort(numbers);
+        long endTime = System.nanoTime(); // End time
+        
+        long elapsedTime = endTime - startTime;
+        double elapsedTimeSecs = elapsedTime / 1_000_000_000.0;
+        
+        System.out.println("Merge sort execution time: " + elapsedTimeSecs + " Secs");
+        //END CPU runtime
         
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("SortedNumb.txt"))) {
             for (int num : numbers) {
