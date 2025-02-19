@@ -5,7 +5,7 @@ public class MergeSort {
     public static void main(String[] args) {
         int[] numbers = new int[500];
         
-        // Read numbers from RandomNum.txt
+       
         try (Scanner scanner = new Scanner(new File("RandNumb.txt"))) {
             for (int i = 0; i < numbers.length && scanner.hasNextInt(); i++) {
                 numbers[i] = scanner.nextInt();
@@ -18,9 +18,9 @@ public class MergeSort {
         System.out.println("Before Sorting:");
         printArray(numbers);
         
-        long startTime = System.nanoTime(); // Start time
+        long startTime = System.nanoTime(); 
         mergeSort(numbers);
-        long endTime = System.nanoTime(); // End time
+        long endTime = System.nanoTime(); 
         
         long elapsedTime = endTime - startTime;
         double elapsedTimeSecs = elapsedTime / 1_000_000_000.0;
@@ -30,7 +30,7 @@ public class MergeSort {
         
         System.out.println("Merge sort execution time: " + elapsedTimeSecs + " Secs");
         
-        // Write sorted numbers to SortedNum.txt
+       
         try (PrintWriter writer = new PrintWriter(new File("SortedNumb.txt"))) {
             for (int num : numbers) {
                 writer.println(num);
