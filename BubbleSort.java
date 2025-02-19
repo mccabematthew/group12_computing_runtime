@@ -5,7 +5,7 @@ public class BubbleSort {
     public static void main(String[] args) {
         List<Integer> numbers = new ArrayList<>();
         
-        try (BufferedReader reader = new BufferedReader(new FileReader("RandomNumb.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("RandNumb.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 try {
